@@ -256,7 +256,6 @@ function CustomerFormModal({ isOpen, onClose, onSuccess, customerData }) {
         </form>
       </div>
 
-      {/* Footer (fixed) */}
       <div className="flex justify-end gap-3 px-6 py-4 border-t">
         <button
           type="button"

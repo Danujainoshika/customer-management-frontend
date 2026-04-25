@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import customerService from "../service/customer.service";
 import CustomerFormModal from "../components/CustomerFormModal";
 import { FilePenLine } from "lucide-react";
+import BulkUploadModal from "../components/BulkUploadModal";
 
 function CustomerList() {
   const [customers, setCustomers] = useState([]);
@@ -11,6 +12,7 @@ function CustomerList() {
   const [totalPages, setTotalPages] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [showBulkModal, setShowBulkModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,13 +40,21 @@ function CustomerList() {
             <h1 className="text-3xl font-bold text-secondary">Customers</h1>
             <p className="text-sm text-gray-500">Manage and view customer records</p>
           </div>
-
-          <button
+          <div className="flex gap-4">
+            <button
             onClick={() => setShowModal(true)}
             className="bg-accent text-secondary px-5 py-2 rounded-xl font-semibold shadow"
           >
             + Create Customer
-          </button>
+            </button>
+            <button
+              onClick={() => setShowBulkModal(true)}
+              className="bg-accent text-secondary px-5 py-2 rounded-xl font-semibold shadow"
+            >
+              + Bulk Upload
+            </button>
+          </div>
+          
         </div>
 
         {/* Table */}
@@ -107,6 +117,12 @@ function CustomerList() {
           </button>
         </div>
       </div>
+
+      <BulkUploadModal
+        isOpen={showBulkModal}
+        onClose={() => setShowBulkModal(false)}
+        onSuccess={loadCustomers}
+      />
 
       {/* Modal */}
       <CustomerFormModal

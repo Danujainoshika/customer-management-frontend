@@ -23,6 +23,26 @@ const customerService = {
     async updateCustomer(id, data) {
         const res = await apiclient.put(`/customers/${id}`, data);
         return res.data;
+    },async uploadBulkCustomers(file, onProgress) {
+        const formData  = new FormData();
+        formData.append("file",file);
+        
+
+        const response = await apiclient.post("/customers/upload", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data", 
+            },
+            
+            onUploadProgress: (progressEvent) => {
+                if (onProgress) {
+                    const percentCompleted = Math.round(
+                        (progressEvent.loaded * 100) / progressEvent.total
+                    );
+                    onProgress(percentCompleted);
+                }
+            },
+        });
+        return response.data;
     }
 }
 
